@@ -85,6 +85,7 @@ The *Program.cs* file is the entry point of the application, and needs to be mod
     builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         .AddMicrosoftIdentityWebApp(builder.Configuration)
         .EnableTokenAcquisitionToCallDownstreamApi()
+        .AddDownstreamApi("DownstreamApi", builder.Configuration.GetSection("DownstreamApi"))
         .AddInMemoryTokenCaches();
     
     builder.Services.AddControllersWithViews(options =>
@@ -111,14 +112,17 @@ The *Program.cs* file is the entry point of the application, and needs to be mod
     }
     
     app.UseHttpsRedirection();
-    app.UseStaticFiles();
-    
     app.UseRouting();
+    
+    app.UseAuthentication();
     app.UseAuthorization();
+
+    app.MapStaticAssets();
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}")
+        .WithStaticAssets();
     
     app.Run();
     ```
