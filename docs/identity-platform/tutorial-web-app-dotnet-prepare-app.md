@@ -79,6 +79,7 @@ Use the following snippet to change into the new *identity-client-web-app* folde
 ```console
 cd identity-client-web-app
 dotnet add package Microsoft.Identity.Web.UI
+dotnet add package Microsoft.Identity.Web.DownstreamApi
 ```
 
 ## Configure the application for authentication
